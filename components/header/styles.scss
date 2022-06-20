@@ -1,0 +1,30 @@
+#header-component {
+    background: #fff;
+
+    h4 {
+        margin: 26px 0px;
+    }
+
+    .link-container {
+        list-style: none;
+
+        .link {
+            margin-inline-end: 24px;
+            font-size: 18px;
+
+            a {
+                text-decoration: none;
+                color: #000000;
+            }
+        }
+
+        .link:last-child {
+            margin-inline-end: 0px;
+        }
+    }
+
+    .active {
+        text-decoration: underline !important;
+
+    }
+}

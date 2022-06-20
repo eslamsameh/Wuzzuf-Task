@@ -1,0 +1,42 @@
+#jobs-page{
+    h1{
+        margin-bottom: 57px;
+        margin-top: 32px;
+    }
+    .search-container{
+        margin-top: 5px;
+        background: #fff;
+    }
+    .card-link{
+        margin-top: 30px;
+    }
+    .card-sub-header{
+        margin: 13px 0px;
+    }
+    .card-header{
+        margin: 0px;
+        margin-bottom: 16px;
+    }
+    .grid-spaces{
+        padding: 0px;
+        &:nth-child(odd){
+            padding-inline-end: 30px;
+        }
+    }
+ 
+    .grid-spaces-skill{
+        padding: 0px;
+        padding-inline-end: 7px;
+      
+    }
+
+    @media screen and (max-width: 50em) {
+        .grid-spaces {
+            &:nth-child(odd){
+                padding-inline-end: 0px !important;
+            }
+        }
+      }
+
+
+}
