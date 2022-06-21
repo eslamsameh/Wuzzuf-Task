@@ -1,4 +1,4 @@
-import { Card, Grid, Loader } from 'components';
+import { Card, Grid, Loader } from 'views/components';
 import { getJobsResult } from 'controllers';
 import { resetAllJobs, resetAllJobSearchResults } from 'models';
 import React, { useEffect } from 'react';

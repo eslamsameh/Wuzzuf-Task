@@ -1,4 +1,4 @@
-import { Loader } from 'components';
+import { Loader } from 'views/components';
 import { getAllJobs } from 'controllers';
 import { resetAllJobs } from 'models';
 import React, { useEffect, useState } from 'react';

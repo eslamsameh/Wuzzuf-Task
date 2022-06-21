@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { routes } from 'routes';
+import { routes } from 'views/routes';
 import './styles.scss';
 
 export const Header: React.FC = () => {

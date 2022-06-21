@@ -30,7 +30,7 @@ export const routes: Route[] = [
   {
     name: 'Home',
     url: '/jobs/*',
-    component: React.lazy(() => import('pages').then(({ Jobs }) => ({ default: Jobs }))),
+    component: React.lazy(() => import('views/containers').then(({ Jobs }) => ({ default: Jobs }))),
     displayedInHeader: false,
   },
   {
@@ -42,14 +42,14 @@ export const routes: Route[] = [
   {
     name: 'Skill',
     url: '/skill/:id',
-    component: React.lazy(() => import('pages').then(({ Skills }) => ({ default: Skills }))),
+    component: React.lazy(() => import('views/containers').then(({ Skills }) => ({ default: Skills }))),
     displayedInHeader: false,
   },
 
   {
     name: 'History',
     url: '/history',
-    component: React.lazy(() => import('pages').then(({ History }) => ({ default: History }))),
+    component: React.lazy(() => import('views/containers').then(({ History }) => ({ default: History }))),
     displayedInHeader: true,
   },
 ];

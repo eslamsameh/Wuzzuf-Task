@@ -3,8 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import 'theme';
 
-import AppRoutes from 'routes';
-import { Header } from 'components';
+import AppRoutes from 'views/routes';
+import { Header } from 'views/components';
 import { Provider } from 'react-redux';
 import { state } from 'models';
 

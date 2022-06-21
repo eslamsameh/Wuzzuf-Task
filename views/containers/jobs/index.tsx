@@ -1,4 +1,4 @@
-import { Card, Grid, SearchBar } from 'components';
+import { Card, Grid, SearchBar } from 'views/components';
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
