@@ -27,7 +27,7 @@ const getArrayOfSkillsService = async (arrayOfIds: any[]): Promise<ResponseProps
 
 const getSearchResultSerivce = async (value: string): Promise<ResponseProps> => {
   try {
-    const { data } = await axiosInstance.get(`/jobs/search?query=${value}`);
+    const { data } = await axiosInstance.get(`/jobs/search?query=${value.toLowerCase()}`);
     return { data: data.data };
   } catch (error: any) {
     return setErrorMessage(error);
