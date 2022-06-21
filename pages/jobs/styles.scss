@@ -8,7 +8,7 @@
         background: #fff;
     }
     .card-link{
-        margin-top: 30px;
+        margin-top: 23px;
     }
     .card-sub-header{
         margin: 13px 0px;
@@ -25,9 +25,9 @@
     }
  
     .grid-spaces-skill{
-        padding: 0px;
-        padding-inline-end: 7px;
-      
+        margin-inline-end: 7px;
+        margin-bottom: 7px;
+
     }
 
     @media screen and (max-width: 50em) {
@@ -36,6 +36,7 @@
                 padding-inline-end: 0px !important;
             }
         }
+     
       }
 
 

@@ -1,9 +1,40 @@
-import { Card, Grid, SearchBar } from 'components';
-import React from 'react';
+import { Card, Grid, SearchBar, Loader } from 'components';
+import { getAllJobs } from 'controllers';
+import { resetAllJobs } from 'models';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'styles.scss';
 
 export const Jobs = () => {
+  const [query, setQuery] = useState<{ limit: number; page: number }>({ limit: 12, page: 0 });
+  const scrollingRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  const data = useSelector((state: any) => state.jobs || {});
+
+  const handleLoadMore = async () => {
+    let userScrollHeight = window.innerHeight + window.scrollY;
+    let windowBottomHeight = scrollingRef.current?.offsetHeight || 0;
+    if (userScrollHeight >= windowBottomHeight) {
+      await dispatch?.(getAllJobs({ ...query, page: query.page + 1 }));
+      setQuery({ ...query, page: query.page + 1 });
+    }
+  };
+
+  useEffect(() => {
+    dispatch?.(getAllJobs({ ...query }));
+    return () => {
+      dispatch?.(resetAllJobs());
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleLoadMore);
+    return () => {
+      window.removeEventListener('scroll', handleLoadMore);
+    };
+  }, [data]);
+
   const renderSearchBoxSection = () => (
     <div className="search-container">
       <Grid expanded row>
@@ -17,31 +48,39 @@ export const Jobs = () => {
 
   const renderAllJobsSeaction = () => (
     <Grid expanded row>
-      {[1, 1, 1, 1, 1, 1, 1, , 1, 1, 1, 1, , 1, 1, 1, 1, , 1].map((v, i) => (
+      {data?.jobs?.jobs?.map((v: any) => (
         <Grid className="grid-spaces" column sm={12} md={6} lg={6}>
-          <Card className="mb-30" key={i} header={<h2 className="card-header">4th Grade Math Teacher</h2>}>
+          <Card className="mb-30" key={v.id} header={<h2 className="card-header">{v.attributes.title}</h2>}>
             <p className="card-sub-header">Related Skills:</p>
-            <Grid row>
-              {[1, 1, 1, 1, 1, 1].map((_, i) => (
-                <Grid key={i} column md={6} sm={12} lg={4} className="mb-10 grid-spaces-skill">
-                  <button className="btn btn-light">operation monitoring</button>
-                </Grid>
+
+            <div className="">
+              {v.relationships.skills?.map((s: any) => (
+                <button key={s.id} className="btn btn-light grid-spaces-skill">
+                  <Link to={`/skill/${s.id}`} className="text-decoration-none">
+                    {s.attributes?.name}
+                  </Link>
+                </button>
               ))}
-            </Grid>
+            </div>
+
             <div className="card-link">
-              <Link to="/jobs/1">View Job details</Link>
+              <Link to={`/jobs/${v.id}`}>View Job details</Link>
             </div>
           </Card>
         </Grid>
       ))}
     </Grid>
   );
+
   return (
     <div id="jobs-page">
       {renderSearchBoxSection()}
-      <div className="container">
-        <h1>All Jobs (255)</h1>
-        {renderAllJobsSeaction()}
+      <div className="container" ref={scrollingRef}>
+        {data?.jobStatus?.loading && <Loader />}
+        <>
+          <h1>All Jobs ({data?.meta?.count * 12 || ''})</h1>
+          {renderAllJobsSeaction()}
+        </>
       </div>
     </div>
   );

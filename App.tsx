@@ -5,14 +5,20 @@ import 'theme';
 
 import AppRoutes from 'routes';
 import { Header } from 'components';
+import { Provider } from 'react-redux';
+import { state } from 'models';
 
 const App = () => (
-  <Suspense fallback={<div>Loading</div>}>
-    <BrowserRouter>
-      <Header />
-      <AppRoutes />
-    </BrowserRouter>
-  </Suspense>
+  <>
+    <Provider store={state}>
+      <Suspense fallback={<div>Loading</div>}>
+        <BrowserRouter>
+          <Header />
+          <AppRoutes />
+        </BrowserRouter>
+      </Suspense>
+    </Provider>
+  </>
 );
 
 export default App;

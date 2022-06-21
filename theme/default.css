@@ -17,6 +17,7 @@ body {
 }
 
 .container {
+    position: relative;
     margin-inline: 60px;
 }
 
@@ -77,6 +78,10 @@ a {
 .btn-light {
     background: #C4C4C4;
     border-radius: 5px;
+}
+.text-decoration-none{
+    text-decoration: none;
+
 }
 
 button {
