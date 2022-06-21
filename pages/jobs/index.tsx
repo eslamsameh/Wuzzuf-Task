@@ -8,14 +8,12 @@ import 'styles.scss';
 
 export const Jobs = () => {
   const [query, setQuery] = useState<{ limit: number; page: number }>({ limit: 12, page: 0 });
-  const scrollingRef = useRef<HTMLDivElement>(null);
+
   const dispatch = useDispatch();
   const data = useSelector((state: any) => state.jobs || {});
 
   const handleLoadMore = async () => {
-    let userScrollHeight = window.innerHeight + window.scrollY;
-    let windowBottomHeight = scrollingRef.current?.offsetHeight || 0;
-    if (userScrollHeight >= windowBottomHeight) {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight && data.jobs?.meta?.next) {
       await dispatch?.(getAllJobs({ ...query, page: query.page + 1 }));
       setQuery({ ...query, page: query.page + 1 });
     }
@@ -29,9 +27,9 @@ export const Jobs = () => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleLoadMore);
+    document.addEventListener('scroll', handleLoadMore);
     return () => {
-      window.removeEventListener('scroll', handleLoadMore);
+      document.removeEventListener('scroll', handleLoadMore);
     };
   }, [data]);
 
@@ -75,10 +73,10 @@ export const Jobs = () => {
   return (
     <div id="jobs-page">
       {renderSearchBoxSection()}
-      <div className="container" ref={scrollingRef}>
+      <div className="container">
         {data?.jobStatus?.loading && <Loader />}
         <>
-          <h1>All Jobs ({data?.meta?.count * 12 || ''})</h1>
+          <h1>All Jobs ({data.jobs?.meta?.count * query.limit || ''})</h1>
           {renderAllJobsSeaction()}
         </>
       </div>

@@ -35,7 +35,7 @@ export const getAllJobs = createAsyncThunk('fetchJobs', async ({ page, limit }: 
       job.relationships.skills = skill.data.map((s: any) => s.data.data.skill);
     }
 
-    return { ...data, jobs: [...data.jobs.concat(newJobs)], error: null, loading: false };
+    return { ...data, jobs: newJobs, error: null, loading: false };
   } else {
     return { jobs: [], error, loading: false };
   }

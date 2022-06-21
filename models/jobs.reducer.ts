@@ -27,7 +27,7 @@ export const jobsSlice = createSlice({
 
     builder.addCase(getAllJobs.fulfilled, (state, action) => {
       state.jobStatus = { loading: false, error: null, success: true };
-      state.jobs = action.payload;
+      state.jobs = { ...action.payload, jobs: [...(state.jobs.jobs || []), ...action.payload.jobs] };
     });
 
     builder.addCase(getAllJobs.rejected, (state, action) => {
