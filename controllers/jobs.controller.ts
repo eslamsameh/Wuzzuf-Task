@@ -25,16 +25,39 @@ const getArrayOfSkillsService = async (arrayOfIds: any[]): Promise<ResponseProps
   }
 };
 
+const getSearchResultSerivce = async (value: string): Promise<ResponseProps> => {
+  try {
+    const { data } = await axiosInstance.get(`/jobs/search?query=${value}`);
+    return { data: data.data };
+  } catch (error: any) {
+    return setErrorMessage(error);
+  }
+};
+
+const mergeSkillsWithJobs = async (data: any) => {
+  const newJobs = (data.jobs || []) as any[];
+
+  for (const job of newJobs) {
+    const skill = await getArrayOfSkillsService(job.relationships.skills);
+    job.relationships.skills = skill.data.map((s: any) => s.data.data.skill);
+  }
+  return newJobs;
+};
+
 export const getAllJobs = createAsyncThunk('fetchJobs', async ({ page, limit }: ActionProps) => {
   const { data, error } = await getJobsService(page, limit);
   if (!error) {
-    const newJobs = (data.jobs || []) as any[];
+    const newJobs = await mergeSkillsWithJobs(data);
+    return { ...data, jobs: newJobs, error: null, loading: false };
+  } else {
+    return { jobs: [], error, loading: false };
+  }
+});
 
-    for (const job of newJobs) {
-      const skill = await getArrayOfSkillsService(job.relationships.skills);
-      job.relationships.skills = skill.data.map((s: any) => s.data.data.skill);
-    }
-
+export const getJobsResult = createAsyncThunk('fetchJobSearch', async (value: string) => {
+  const { data, error } = await getSearchResultSerivce(value);
+  if (!error) {
+    const newJobs = await mergeSkillsWithJobs(data);
     return { ...data, jobs: newJobs, error: null, loading: false };
   } else {
     return { jobs: [], error, loading: false };

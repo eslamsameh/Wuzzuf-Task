@@ -3,9 +3,10 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 
 const AppRoutes = () => (
   <Routes>
-    {routes.map(({ component: Component, url }: Route, index) => (
-      <Route key={index} path={url} element={<Component />} />
-    ))}
+    {routes.map(
+      ({ component: Component, url }: Route, index) =>
+        Component && <Route key={index} path={url} element={<Component />} />
+    )}
     <Route path="/" element={<Navigate to={routes[0].url} />} />
   </Routes>
 );
@@ -23,13 +24,19 @@ export const routes: Route[] = [
   {
     name: 'Home',
     url: '/jobs',
-    component: React.lazy(() => import('pages').then(({ Jobs }) => ({ default: Jobs }))),
+    component: undefined,
     displayedInHeader: true,
+  },
+  {
+    name: 'Home',
+    url: '/jobs/*',
+    component: React.lazy(() => import('pages').then(({ Jobs }) => ({ default: Jobs }))),
+    displayedInHeader: false,
   },
   {
     name: 'Search',
     url: '/jobs/search',
-    component: React.lazy(() => import('pages').then(({ Search }) => ({ default: Search }))),
+    component: undefined,
     displayedInHeader: true,
   },
   {
@@ -38,12 +45,7 @@ export const routes: Route[] = [
     component: React.lazy(() => import('pages').then(({ Skills }) => ({ default: Skills }))),
     displayedInHeader: false,
   },
-  {
-    name: 'Single Job',
-    url: '/jobs/:id',
-    component: React.lazy(() => import('pages').then(({ SingleJob }) => ({ default: SingleJob }))),
-    displayedInHeader: false,
-  },
+
   {
     name: 'History',
     url: '/history',
