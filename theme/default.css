@@ -53,7 +53,7 @@ h6 {
     font-weight: 700;
 }
 
-h2 {
+h2, .h2 {
     font-size: 24px;
 }
 
@@ -96,10 +96,23 @@ button {
     margin-bottom: 10px !important;
 }
 .mt-25{
-    margin-bottom: 25px !important;
+    margin-top: 25px !important;
+
+}
+.mt-50{
+    margin-top: 50px !important;
 
 }
 
 .p-0 {
     padding: 0px !important;
+}
+.m-inline-end-117-with-aspact-ratio{
+    margin-inline-end: 8vw;
+}
+.bold{
+    font-weight: 700 !important;
+}
+.normal{
+    font-weight: 400 !important;
 }

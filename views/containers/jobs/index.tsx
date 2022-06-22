@@ -5,7 +5,6 @@ import { createSearchParams, Route, Routes, useNavigate, useSearchParams } from 
 import { debounce } from 'utils';
 import { AllJobs } from './all-jobs';
 import { Search } from './search';
-import { SingleJob } from './single-job';
 import './styles.scss';
 
 export const Jobs: React.FC = () => {
@@ -42,7 +41,6 @@ export const Jobs: React.FC = () => {
       {renderSearchBoxSection()}
       <Routes>
         <Route path="/" element={<AllJobs />} />
-        <Route path=":id" element={<SingleJob />} />
         <Route path="search" element={<Search />} />
       </Routes>
     </div>
@@ -67,7 +65,7 @@ export const renderAllJobsSeaction = (data: any[] = []) => (
           </div>
 
           <div className="card-link">
-            <Link to={`/jobs/${v.id}`}>View Job details</Link>
+            <Link to={`/job/${v.id}`}>View Job details</Link>
           </div>
         </Card>
       </Grid>

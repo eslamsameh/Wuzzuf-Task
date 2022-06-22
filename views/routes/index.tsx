@@ -45,7 +45,12 @@ export const routes: Route[] = [
     component: React.lazy(() => import('views/containers').then(({ Skills }) => ({ default: Skills }))),
     displayedInHeader: false,
   },
-
+  {
+    name: 'Single Job',
+    url: '/job/:id',
+    component: React.lazy(() => import('views/containers').then(({ SingleJob }) => ({ default: SingleJob }))),
+    displayedInHeader: false,
+  },
   {
     name: 'History',
     url: '/history',
