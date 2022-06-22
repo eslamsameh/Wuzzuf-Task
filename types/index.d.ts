@@ -1,5 +1,4 @@
 declare module '*.png';
-declare module '*.css';
 
 declare type Status = {
   loading: boolean;

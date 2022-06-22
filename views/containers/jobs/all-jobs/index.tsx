@@ -1,7 +1,7 @@
 import { Loader } from 'views/components';
 import { getAllJobs } from 'controllers';
 import { resetAllJobs } from 'models';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { renderAllJobsSeaction } from '..';
 
@@ -11,24 +11,27 @@ export const AllJobs = () => {
   const dispatch = useDispatch();
   const { jobs, jobStatus } = useSelector((state: any) => state.jobs || {});
 
-  const handleLoadMore = async () => {
-    if (window.innerHeight + window.scrollY >= document.body.scrollHeight && jobs?.meta?.next) {
-      await dispatch?.(getAllJobs({ limit: pageSize, page: page + 1 }));
+  const handleLoadMore = (e: any) => {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10 && jobs?.meta?.next) {
       setPage(page + 1);
     }
   };
 
+  useMemo(() => {
+    page && dispatch?.(getAllJobs({ limit: pageSize, page }));
+  }, [page]);
+
   useEffect(() => {
-    dispatch?.(getAllJobs({ limit: pageSize, page: page + 1 }));
+    dispatch?.(getAllJobs({ limit: pageSize, page }));
     return () => {
       dispatch?.(resetAllJobs());
     };
   }, []);
 
   useEffect(() => {
-    document.addEventListener('scroll', handleLoadMore);
+    window.addEventListener('scroll', handleLoadMore);
     return () => {
-      document.removeEventListener('scroll', handleLoadMore);
+      window.removeEventListener('scroll', handleLoadMore);
     };
   }, [jobs]);
 
