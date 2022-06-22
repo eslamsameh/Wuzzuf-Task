@@ -22,7 +22,7 @@ export const Skills = () => {
   const renderRelatedJobsSection = (job: any) => (
     <div className="related-job-container" key={`${job.id}`}>
       <h2>
-        <Link className="h2 bold" to={`jobs/${job.id}`}>
+        <Link className="h2 bold" to={`/job/${job.id}`}>
           {job?.attributes?.title}
         </Link>
       </h2>

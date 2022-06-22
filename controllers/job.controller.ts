@@ -2,9 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setErrorMessage } from 'helpers';
 import { axiosInstance } from './interceptor';
 
-const getSkillService = async (value: string): Promise<ResponseProps> => {
+const getSingleJobService = async (value: string): Promise<ResponseProps> => {
   try {
-    const { data } = await axiosInstance.get(`/skill/${value}`);
+    const { data } = await axiosInstance.get(`/job/${value}`);
     return { data: data.data };
   } catch (error: any) {
     return setErrorMessage(error);
@@ -30,7 +30,7 @@ const getArrayOfJobsService = async (arrayOfIds: any[]): Promise<ResponseProps> 
 };
 
 const mergeSkillsWithJobs = async (data: any) => {
-  const newData = (data.skill || {}) as any;
+  const newData = (data.job || {}) as any;
 
   const skills = await getArrayOfSkillsService(newData.relationships.skills);
   const jobs = await getArrayOfJobsService(newData.relationships.jobs);
@@ -41,12 +41,12 @@ const mergeSkillsWithJobs = async (data: any) => {
   return newData;
 };
 
-export const getSingleSkill = createAsyncThunk('fetchSingleSkill', async (id: string) => {
-  const { data, error } = await getSkillService(id);
+export const getSingleJob = createAsyncThunk('fetchSingleJob', async (id: string) => {
+  const { data, error } = await getSingleJobService(id);
   if (!error) {
-    const newJobs = await mergeSkillsWithJobs(data);
-    return { ...data, skill: newJobs, error: null, loading: false };
+    const newJob = await mergeSkillsWithJobs(data);
+    return { ...data, job: newJob, error: null, loading: false };
   } else {
-    return { jobs: [], error, loading: false };
+    return { job: {}, error, loading: false };
   }
 });
