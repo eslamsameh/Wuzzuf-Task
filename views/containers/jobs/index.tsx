@@ -1,6 +1,5 @@
 import { Card, Grid, SearchBar } from 'views/components';
 import React, { ChangeEvent, useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createSearchParams, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 import { debounce } from 'utils';
@@ -17,12 +16,13 @@ export const Jobs: React.FC = () => {
 
   const onReciveSearchText = useCallback(
     debounce((e: ChangeEvent<HTMLInputElement>) => {
-      setSearchValue(e.target.value);
-      if (e.target.value.length > 3) {
-        navigate({ pathname: '/jobs/search', search: createSearchParams({ query: e.target.value }).toString() });
+      const value = e.target.value.trimStart();
+      setSearchValue(value);
+      if (value.length > 3) {
+        navigate({ pathname: '/jobs/search', search: createSearchParams({ query: value }).toString() });
       }
-      if (!e.target.value.length) navigate('/jobs');
-    }, 200),
+      if (!value.length) navigate('/jobs');
+    }, 100),
     []
   );
 

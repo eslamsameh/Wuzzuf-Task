@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllJobs, getJobsResult } from 'controllers';
+export const SEARCH_HISTORY = 'SEARCH_HISTORY';
 
 interface StateProps {
   jobs: any;
   jobStatus: Status;
   searchJobsResults: any;
   searchJobsStatus: Status;
+  searchHistory: string[];
 }
 
 const initialState = {
@@ -13,6 +15,7 @@ const initialState = {
   jobStatus: { loading: false, error: null, success: false },
   searchJobsResults: {},
   searchJobsStatus: { loading: false, error: null, success: false },
+  searchHistory: [],
 } as StateProps;
 
 export const jobsSlice = createSlice({
@@ -26,6 +29,19 @@ export const jobsSlice = createSlice({
     resetAllJobSearchResults: (state: StateProps) => {
       state.searchJobsResults = {};
       state.searchJobsStatus = { loading: false, error: null, success: false };
+    },
+    getSearchResults: (state: StateProps) => {
+      const pervouseHistory = JSON.parse(localStorage.getItem(SEARCH_HISTORY) || '[]') as string[];
+      state.searchHistory = pervouseHistory;
+    },
+    addSearchHistory: (state: StateProps, action: { payload: string }) => {
+      const pervouseHistory = JSON.parse(localStorage.getItem(SEARCH_HISTORY) || '[]') as string[];
+      const isExistBefore = Boolean(pervouseHistory.filter((v) => v.trim() === action.payload.trim()).length);
+      if (!isExistBefore) {
+        const newSearchHistoryArray = [...pervouseHistory, action.payload.trimEnd()];
+        state.searchHistory = [...newSearchHistoryArray];
+        localStorage.setItem(SEARCH_HISTORY, JSON.stringify(newSearchHistoryArray));
+      }
     },
   },
   extraReducers: (builder) => {
@@ -60,4 +76,4 @@ export const jobsSlice = createSlice({
 });
 
 export default jobsSlice.reducer;
-export const { resetAllJobs, resetAllJobSearchResults } = jobsSlice.actions;
+export const { resetAllJobs, resetAllJobSearchResults, addSearchHistory, getSearchResults } = jobsSlice.actions;

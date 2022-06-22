@@ -1,0 +1,12 @@
+#search-page{
+.spaces-view-related-card{
+    padding-inline-start: 50px;
+}
+
+@media screen and (max-width: 50em) {
+    .spaces-view-related-card {
+        padding: 0px;
+    }
+ 
+  }
+}

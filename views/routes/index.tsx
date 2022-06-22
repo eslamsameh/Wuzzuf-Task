@@ -23,15 +23,15 @@ export declare type Route = {
 export const routes: Route[] = [
   {
     name: 'Home',
-    url: '/jobs/*',
-    component: React.lazy(() => import('views/containers').then(({ Jobs }) => ({ default: Jobs }))),
-    displayedInHeader: false,
-  },
-  {
-    name: 'Home',
     url: '/jobs',
     component: undefined,
     displayedInHeader: true,
+  },
+  {
+    name: 'Home',
+    url: '/jobs/*',
+    component: React.lazy(() => import('views/containers').then(({ Jobs }) => ({ default: Jobs }))),
+    displayedInHeader: false,
   },
   {
     name: 'Search',
