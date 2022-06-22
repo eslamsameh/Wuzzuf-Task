@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { createSearchParams, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 import { debounce } from 'utils';
 import { AllJobs } from './all-jobs';
-import { Search } from './search';
+import { Search } from './search-jobs';
 import './styles.scss';
 
 export const Jobs: React.FC = () => {
@@ -48,27 +48,29 @@ export const Jobs: React.FC = () => {
 };
 
 export const renderAllJobsSeaction = (data: any[] = []) => (
-  <Grid expanded row>
-    {data.map((v: any) => (
-      <Grid className="grid-spaces" column sm={12} md={6} lg={6}>
-        <Card className="mb-30" key={v.id} header={<h2 className="card-header">{v.attributes.title}</h2>}>
-          <p className="card-sub-header">Related Skills:</p>
+  <div className="mt-10">
+    <Grid expanded row>
+      {data.map((v: any) => (
+        <Grid className="grid-spaces" column sm={12} md={6} lg={6}>
+          <Card className="mb-30" key={v.id} header={<h2 className="card-header">{v.attributes.title}</h2>}>
+            <p className="card-sub-header">Related Skills:</p>
 
-          <div>
-            {v.relationships.skills?.map((s: any) => (
-              <button key={s.id} className="btn btn-light grid-spaces-skill">
-                <Link to={`/skill/${s.id}`} className="text-decoration-none">
-                  {s.attributes?.name}
-                </Link>
-              </button>
-            ))}
-          </div>
+            <div>
+              {v.relationships.skills?.map((s: any) => (
+                <button key={s.id} className="btn btn-light grid-spaces-skill">
+                  <Link to={`/skill/${s.id}`} className="text-decoration-none">
+                    {s.attributes?.name}
+                  </Link>
+                </button>
+              ))}
+            </div>
 
-          <div className="card-link">
-            <Link to={`/job/${v.id}`}>View Job details</Link>
-          </div>
-        </Card>
-      </Grid>
-    ))}
-  </Grid>
+            <div className="card-link">
+              <Link to={`/job/${v.id}`}>View Job details</Link>
+            </div>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  </div>
 );
