@@ -1,7 +1,7 @@
 import { Grid, Loader, RealedViewCard } from 'views/components';
 import { getJobsResult } from 'controllers';
 import { addSearchHistory, getSearchResults, resetAllJobSearchResults } from 'models';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { renderAllJobsSeaction } from '..';
@@ -19,7 +19,7 @@ interface Props {
   };
 }
 
-export const Search = () => {
+const Search = () => {
   const dispatch = useDispatch();
   const { searchJobsStatus, searchJobsResults, searchHistory } = useSelector((state: Props) => state.jobs || {});
   const [searchParams, _] = useSearchParams();
@@ -30,10 +30,11 @@ export const Search = () => {
   }, []);
 
   useEffect(() => {
+    if (searchJobsResults?.jobs?.length) dispatch(addSearchHistory(searchValueFromQuery!));
+  }, [searchJobsResults?.jobs?.length]);
+
+  useEffect(() => {
     if (searchValueFromQuery) dispatch?.(getJobsResult(searchValueFromQuery));
-    if (searchJobsResults?.jobs?.length) {
-      dispatch(addSearchHistory(searchValueFromQuery!));
-    }
     return () => {
       dispatch?.(resetAllJobSearchResults());
     };
@@ -81,3 +82,5 @@ export const Search = () => {
     </div>
   );
 };
+
+export const SearchJobs = React.memo(Search);

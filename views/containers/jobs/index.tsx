@@ -1,33 +1,44 @@
 import { Card, Grid, SearchBar } from 'views/components';
-import React, { ChangeEvent, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { createSearchParams, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { createSearchParams, Route, Routes, useNavigate, useSearchParams, Link, useLocation } from 'react-router-dom';
 import { AllJobs } from './all-jobs';
-import { Search } from './search-jobs';
+import { SearchJobs } from './search-jobs';
 import loadsh from 'lodash';
 import './styles.scss';
 
 export const Jobs: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams, _] = useSearchParams();
   const searchValueFromQuery = searchParams.get('query');
 
   const textChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.trimStart();
     setSearchValue(query);
-    if (query.length > 3) navigate({ pathname: '/jobs/search', search: createSearchParams({ query }).toString() });
+    if (query.length > 3) debounceHandleNavigation(query);
     if (!query.length) navigate('/jobs');
   };
 
-  const debouncedChangeHandler = useCallback(loadsh.debounce(textChangeHandler, 300, { leading: true }), []);
+  const debounceHandleNavigation = useCallback(
+    loadsh.debounce((query: string) => {
+      navigate({ pathname: '/jobs/search', search: createSearchParams({ query }).toString() });
+    }, 1000),
+    []
+  );
+
+  useEffect(() => {
+    if (location.pathname === '/jobs') {
+      setSearchValue('');
+    }
+  }, [location.pathname]);
 
   const renderSearchBoxSection = () => (
     <div className="search-container">
       <Grid expanded row>
         <Grid column sm={12} md={2}></Grid>
         <Grid column sm={12} md={8}>
-          <SearchBar value={searchValue || searchValueFromQuery || ''} onChange={debouncedChangeHandler} />
+          <SearchBar value={searchValue || searchValueFromQuery || ''} onChange={textChangeHandler} />
         </Grid>
       </Grid>
     </div>
@@ -38,7 +49,7 @@ export const Jobs: React.FC = () => {
       {renderSearchBoxSection()}
       <Routes>
         <Route path="/" element={<AllJobs />} />
-        <Route path="search" element={<Search />} />
+        <Route path="search" element={<SearchJobs />} />
       </Routes>
     </div>
   );
