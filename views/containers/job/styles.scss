@@ -1,6 +1,8 @@
+@import './theme/palette.scss';
+
 #singl-job-page{
     .related-job-container{
-        background-color: #F0F0F0;
+        background-color: $light-gray-color;
         padding: 20px 30px;
         margin-bottom: 22px;
     }

@@ -1,3 +1,5 @@
+@import './theme/palette.scss';
+
 #jobs-pages{
     h1{
         margin-bottom: 57px;
@@ -5,7 +7,7 @@
     }
     .search-container{
         margin-top: 5px;
-        background: #fff;
+        background: $white-color;
     }
     .card-link{
         margin-top: 23px;

@@ -1,5 +1,7 @@
+@import './theme/palette.scss';
+
 #card-componenet{
-    background: #fff;
+    background: $white-color;
     padding: 38px;
     padding-bottom: 23px;
 }

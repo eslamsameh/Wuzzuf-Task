@@ -1,5 +1,7 @@
+@import './theme/palette.scss';
+
 #header-component {
-    background: #fff;
+    background: $white-color;
 
     h4 {
         margin: 26px 0px;
@@ -14,7 +16,7 @@
 
             a {
                 text-decoration: none;
-                color: #000000;
+                color: $dark-color;
             }
         }
 
