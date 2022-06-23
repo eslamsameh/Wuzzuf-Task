@@ -4,8 +4,6 @@ import { SingleJob } from '.';
 import * as redux from 'react-redux';
 import { jobMockedData } from 'mocks';
 
-const mockDispatch = jest.fn();
-
 jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: () => jest.fn(),

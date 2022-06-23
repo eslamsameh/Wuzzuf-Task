@@ -59,7 +59,7 @@ export const renderAllJobsSeaction = (data: JobObject[] = []) => (
   <div className="mt-10">
     <Grid expanded row>
       {data.map((job: JobObject) => (
-        <Grid className="grid-spaces" column sm={12} md={6} lg={6}>
+        <Grid className="grid-spaces" column sm={12} md={6} lg={6} key={job.id}>
           <Card className="mb-30" key={job.id} header={<h2 className="card-header">{job.attributes.title}</h2>}>
             <p className="card-sub-header">Related Skills:</p>
 
