@@ -17,6 +17,7 @@ describe('Test all Jobs Page', () => {
       .spyOn(React, 'useEffect')
       .mockImplementationOnce((cb: any) => cb()())
       .mockImplementationOnce((cb: any) => cb()());
+
     jest.spyOn(window, 'addEventListener').mockImplementation((event: any, handle: any) => {
       handle();
     });
