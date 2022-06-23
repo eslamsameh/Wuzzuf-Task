@@ -63,7 +63,7 @@ export const Skills = () => {
       </div>
       <div className="mt-50">
         <h2>Related Jobs:</h2>
-        {skill?.skill?.relationships?.jobs?.map((v: JobObject) => renderRelatedJobsSection(v))}
+        {skill?.skill?.relationships?.jobs?.map((job: JobObject) => renderRelatedJobsSection(job))}
       </div>
     </Card>
   );

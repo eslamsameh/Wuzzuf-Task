@@ -29,9 +29,11 @@ export const Search = () => {
     dispatch(getSearchResults());
   }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     if (searchValueFromQuery) dispatch?.(getJobsResult(searchValueFromQuery));
-    if (searchJobsResults?.jobs?.length) dispatch(addSearchHistory(searchValueFromQuery!));
+    if (searchJobsResults?.jobs?.length) {
+      dispatch(addSearchHistory(searchValueFromQuery!));
+    }
     return () => {
       dispatch?.(resetAllJobSearchResults());
     };
@@ -40,10 +42,10 @@ export const Search = () => {
   const renderSearchHistorySection = () => (
     <RealedViewCard title="Search history">
       <ul className="mt-25">
-        {searchHistory?.map((v: string) => (
+        {searchHistory?.map((result: string) => (
           <li>
-            <Link to={`/jobs/search?query=${v}`}>
-              <p>{v}</p>
+            <Link to={`/jobs/search?query=${result}`}>
+              <p>{result}</p>
             </Link>
           </li>
         ))}

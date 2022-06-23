@@ -39,7 +39,7 @@ export const getSingleJobAPI = async (id: string): Promise<ResponseProps> => {
   }
 };
 
-export const getSingleSkillAPI = async (id: number): Promise<ResponseProps> => {
+export const getSingleSkillAPI = async (id: string): Promise<ResponseProps> => {
   try {
     const { data } = await axiosInstance.get(`/skill/${id}`);
     return { data: data.data };
@@ -57,18 +57,18 @@ export const getSkillAPI = async (value: string): Promise<ResponseProps> => {
   }
 };
 
-export const getArrayOfSkillsAPI = async (arrayOfIds: any[] = []): Promise<ResponseProps> => {
+export const getArrayOfSkillsAPI = async (arrayOfIds: SkillObject[] = []): Promise<ResponseProps> => {
   try {
-    const data = await Promise.all(arrayOfIds.map(async (v) => getSingleSkillAPI(v.id)));
+    const data = await Promise.all(arrayOfIds.map(async ({ id }) => getSingleSkillAPI(id)));
     return { data };
   } catch (error: any) {
     return setErrorMessage(error);
   }
 };
 
-export const getArrayOfJobsAPI = async (arrayOfIds: any[] = []): Promise<ResponseProps> => {
+export const getArrayOfJobsAPI = async (arrayOfIds: JobObject[] = []): Promise<ResponseProps> => {
   try {
-    const data = await Promise.all(arrayOfIds.map((v) => getSingleJobAPI(v.id)));
+    const data = await Promise.all(arrayOfIds.map(({ id }) => getSingleJobAPI(id)));
     return { data };
   } catch (error: any) {
     return setErrorMessage(error);
