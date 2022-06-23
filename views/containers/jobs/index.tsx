@@ -44,26 +44,26 @@ export const Jobs: React.FC = () => {
   );
 };
 
-export const renderAllJobsSeaction = (data: any[] = []) => (
+export const renderAllJobsSeaction = (data: JobObject[] = []) => (
   <div className="mt-10">
     <Grid expanded row>
-      {data.map((v: any) => (
+      {data.map((job: JobObject) => (
         <Grid className="grid-spaces" column sm={12} md={6} lg={6}>
-          <Card className="mb-30" key={v.id} header={<h2 className="card-header">{v.attributes.title}</h2>}>
+          <Card className="mb-30" key={job.id} header={<h2 className="card-header">{job.attributes.title}</h2>}>
             <p className="card-sub-header">Related Skills:</p>
 
             <div>
-              {v.relationships.skills?.map((s: any) => (
-                <button key={s.id} className="btn btn-light grid-spaces-skill">
-                  <Link to={`/skill/${s.id}`} className="text-decoration-none">
-                    {s.attributes?.name}
+              {job.relationships.skills?.map((skill: SkillObject) => (
+                <button key={skill.id} className="btn btn-light grid-spaces-skill">
+                  <Link to={`/skill/${skill.id}`} className="text-decoration-none">
+                    {skill.attributes?.name}
                   </Link>
                 </button>
               ))}
             </div>
 
             <div className="card-link">
-              <Link to={`/job/${v.id}`}>View Job details</Link>
+              <Link to={`/job/${job.id}`}>View Job details</Link>
             </div>
           </Card>
         </Grid>

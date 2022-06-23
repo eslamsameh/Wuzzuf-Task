@@ -8,9 +8,20 @@ import { renderAllJobsSeaction } from '..';
 import './styles.scss';
 import { Link } from 'react-router-dom';
 
+interface Props {
+  jobs: {
+    searchJobsStatus: Status;
+    searchJobsResults: {
+      jobs: JobObject[];
+      meta: MetaProps;
+    };
+    searchHistory: string[];
+  };
+}
+
 export const Search = () => {
   const dispatch = useDispatch();
-  const { searchJobsStatus, searchJobsResults, searchHistory } = useSelector((state: any) => state.jobs || {});
+  const { searchJobsStatus, searchJobsResults, searchHistory } = useSelector((state: Props) => state.jobs || {});
   const [searchParams, _] = useSearchParams();
   const searchValueFromQuery = searchParams.get('query');
 

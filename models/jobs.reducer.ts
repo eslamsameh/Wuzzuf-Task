@@ -3,9 +3,9 @@ import { getAllJobs, getJobsResult } from 'controllers';
 export const SEARCH_HISTORY = 'SEARCH_HISTORY';
 
 interface StateProps {
-  jobs: any;
+  jobs: { jobs: { jobs: JobObject[] | [] } } | Object;
   jobStatus: Status;
-  searchJobsResults: any;
+  searchJobsResults: { jobs: { jobs: JobObject[] | [] } } | Object;
   searchJobsStatus: Status;
   searchHistory: string[];
 }
@@ -49,7 +49,7 @@ export const jobsSlice = createSlice({
       state.jobStatus = { loading: true, error: null, success: false };
     });
 
-    builder.addCase(getAllJobs.fulfilled, (state, action) => {
+    builder.addCase(getAllJobs.fulfilled, (state: { jobs: any; jobStatus: Status }, action) => {
       state.jobStatus = { loading: false, error: null, success: true };
       state.jobs = { ...action.payload, jobs: [...(state.jobs.jobs || []), ...action.payload.jobs] };
     });

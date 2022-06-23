@@ -16,7 +16,7 @@ export default AppRoutes;
 export declare type Route = {
   url: string;
   name: string;
-  component: any;
+  component: React.FC | undefined;
   displayedInHeader: boolean;
 };
 

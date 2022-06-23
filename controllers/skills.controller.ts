@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getArrayOfJobsAPI, getArrayOfSkillsAPI, getSkillAPI } from './APIS';
 
-const mergeSkillsWithJobs = async (data: any) => {
-  const newData = (data.skill || {}) as any;
-  const skills = await getArrayOfSkillsAPI(newData.relationships.skills);
-  const jobs = await getArrayOfJobsAPI(newData.relationships.jobs);
+const mergeSkillsWithJobs = async (data: { skill: SkillObject }) => {
+  const { skill } = data || {};
+  const skills = await getArrayOfSkillsAPI(skill?.relationships?.skills);
+  const jobs = await getArrayOfJobsAPI(skill?.relationships?.jobs);
 
-  newData.relationships.skills = skills?.data?.map((skill: any) => skill.data.skill) || [];
-  newData.relationships.jobs = jobs?.data?.map((job: any) => job.data.job) || [];
-  return newData;
+  skill.relationships.skills = skills?.data?.map((skill: { data: { skill: SkillObject } }) => skill.data.skill) || [];
+  skill.relationships.jobs = jobs?.data?.map((job: { data: { job: JobObject } }) => job.data.job) || [];
+  return skill;
 };
 
 export const getSingleSkill = createAsyncThunk('fetchSingleSkill', async (id: string) => {

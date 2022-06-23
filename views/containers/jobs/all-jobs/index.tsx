@@ -5,13 +5,23 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { renderAllJobsSeaction } from '..';
 
+interface Props {
+  jobs: {
+    jobs: {
+      jobs: JobObject[];
+      meta: MetaProps;
+    };
+    jobStatus: Status;
+  };
+}
+
 export const AllJobs = () => {
   const pageSize = 12;
   const [page, setPage] = useState<number>(0);
   const dispatch = useDispatch();
-  const { jobs, jobStatus } = useSelector((state: any) => state.jobs || {});
+  const { jobs, jobStatus } = useSelector((state: Props) => state.jobs || {});
 
-  const handleLoadMore = (e: any) => {
+  const handleLoadMore = () => {
     if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10 && jobs?.meta?.next) {
       setPage(page + 1);
     }

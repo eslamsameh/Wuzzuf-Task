@@ -7,9 +7,17 @@ import { Link } from 'react-router-dom';
 import { Card, Grid, Loader, RealedViewCard } from 'views/components';
 import './styles.scss';
 
+interface Props {
+  job: {
+    job: {
+      job: JobObject;
+    };
+    jobStatus: Status;
+  };
+}
 export const SingleJob = () => {
   const dispatch = useDispatch();
-  const { job, jobStatus } = useSelector((state: any) => state.job || {});
+  const { job, jobStatus } = useSelector((state: Props) => state.job || {});
   const params = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -19,7 +27,7 @@ export const SingleJob = () => {
     };
   }, [params.id]);
 
-  const renderRelatedSkillsSection = (skill: any) => (
+  const renderRelatedSkillsSection = (skill: SkillObject) => (
     <div className="related-job-container" key={`${skill.id}`}>
       <h2>
         <Link className="h2 bold" to={`skill/${skill.attributes?.name}`}>
@@ -50,7 +58,7 @@ export const SingleJob = () => {
     <Card>
       <div className="mt-50">
         <h2>Related Skils:</h2>
-        {job?.job?.relationships?.skills?.map((v: any) => renderRelatedSkillsSection(v))}
+        {job?.job?.relationships?.skills?.map((v: SkillObject) => renderRelatedSkillsSection(v))}
       </div>
     </Card>
   );
@@ -58,10 +66,10 @@ export const SingleJob = () => {
   const renderRelatedJobsSection = () => (
     <RealedViewCard title="Related Jobs">
       <ul className="mt-25">
-        {job?.job?.relationships?.jobs?.map((job: any, index: number) => (
+        {job?.job?.relationships?.jobs?.map((job: JobObject, index: number) => (
           <li key={`${job.id}-${index}`}>
             <Link to={`/job/${job.id}`}>
-              <p>{job.attributes?.name}</p>
+              <p>{job.attributes?.title}</p>
             </Link>
           </li>
         ))}

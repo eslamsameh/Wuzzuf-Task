@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getSingleSkill } from 'controllers';
 
 interface StateProps {
-  skill: any;
+  skill: SkillObject | Object;
   skillStatus: Status;
 }
 

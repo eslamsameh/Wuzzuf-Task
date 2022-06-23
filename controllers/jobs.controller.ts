@@ -6,14 +6,14 @@ interface ActionProps {
   page: number;
 }
 
-const mergeSkillsWithJobs = async (data: any) => {
-  const newJobs = (data.jobs || []) as any[];
+const mergeSkillsWithJobs = async (data: { jobs: JobObject[] }) => {
+  const { jobs } = data || [];
 
-  for (const job of newJobs) {
+  for (const job of jobs) {
     const skill = await getArrayOfSkillsAPI(job.relationships.skills);
-    job.relationships.skills = skill.data.map((skill: any) => skill.data.skill);
+    job.relationships.skills = skill.data.map((skill: { data: { skill: SkillObject } }) => skill.data.skill);
   }
-  return newJobs;
+  return jobs;
 };
 
 export const getAllJobs = createAsyncThunk('fetchJobs', async ({ page, limit }: ActionProps) => {

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getSingleJob } from 'controllers';
 
 interface StateProps {
-  job: any;
+  job: JobObject | Object;
   jobStatus: Status;
 }
 
