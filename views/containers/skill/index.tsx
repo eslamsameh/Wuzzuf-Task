@@ -13,7 +13,6 @@ export const Skills = () => {
 
   useEffect(() => {
     dispatch(getSingleSkill(params.id!));
-
     return () => {
       dispatch(resetSkill());
     };

@@ -1,5 +1,11 @@
-import { setErrorMessage } from 'helpers';
 import { axiosInstance } from './interceptor';
+
+const setErrorMessage = (error: any) => {
+  const err = {
+    error: error.response?.data?.errors?.message || error.response?.data?.errors || error.message,
+  };
+  return err;
+};
 
 interface ResponseProps {
   error?: Error | string;
@@ -36,6 +42,15 @@ export const getSingleJobAPI = async (id: string): Promise<ResponseProps> => {
 export const getSingleSkillAPI = async (id: number): Promise<ResponseProps> => {
   try {
     const { data } = await axiosInstance.get(`/skill/${id}`);
+    return { data: data.data };
+  } catch (error: any) {
+    return setErrorMessage(error);
+  }
+};
+
+export const getSkillAPI = async (value: string): Promise<ResponseProps> => {
+  try {
+    const { data } = await axiosInstance.get(`/skill/${value}`);
     return { data: data.data };
   } catch (error: any) {
     return setErrorMessage(error);
