@@ -28,7 +28,7 @@ export const Card: React.FC<Props> = ({ className, header, footer, children }: P
   );
 };
 
-const CardHeader: React.FC<CardHeaderProps> = ({ children }: CardHeaderProps) => {
+export const CardHeader: React.FC<CardHeaderProps> = ({ children }: CardHeaderProps) => {
   let childrenComponent = children;
   if (typeof children === 'string') {
     childrenComponent = <h2>{children}</h2>;
@@ -36,7 +36,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({ children }: CardHeaderProps) =>
   return <div>{childrenComponent}</div>;
 };
 
-const CardFooter: React.FC<CardFooterProps> = ({ children }: CardFooterProps) => {
+export const CardFooter: React.FC<CardFooterProps> = ({ children }: CardFooterProps) => {
   let childrenComponent = children;
   if (typeof children === 'string') {
     childrenComponent = <p className="Box-title pr-3">{children}</p>;
