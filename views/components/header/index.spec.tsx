@@ -14,7 +14,7 @@ describe('Test Header Component', () => {
     const wrapper = shallow(<Header />);
     expect(wrapper.find('NavLink')).toHaveLength(3);
     const lastNav = wrapper.find('NavLink').at(1);
-    expect(lastNav.prop('to')).toEqual('/job');
+    expect(lastNav.prop('to')).toEqual('/jobs/search');
   });
 
   it('should Header with 3 navs and display the first nav with navigate to history pages ', () => {
